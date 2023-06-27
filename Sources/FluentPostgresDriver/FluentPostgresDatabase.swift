@@ -41,7 +41,7 @@ extension _FluentPostgresDatabase: Database {
     func execute(enum e: DatabaseEnum) -> EventLoopFuture<Void> {
         switch e.action {
         case .create:
-            return e.createCases.reduce(self.create(enum: e.name)) { $0.value($1) }.run()
+            return e.createCases.reduce(self.create(enum: SQLQualifiedEnum(e.name, space: e.space))) { $0.value($1) }.run()
         case .update:
             if !e.deleteCases.isEmpty {
                 self.logger.error("PostgreSQL does not support deleting enum cases.")
@@ -51,10 +51,10 @@ extension _FluentPostgresDatabase: Database {
             }
 
             return self.eventLoop.flatten(e.createCases.map { create in
-                self.alter(enum: e.name).add(value: create).run()
+                self.alter(enum: SQLQualifiedEnum(e.name, space: e.space)).add(value: create).run()
             })
         case .delete:
-            return self.drop(enum: e.name).run()
+            return self.drop(enum: SQLQualifiedEnum(e.name, space: e.space)).run()
         }
     }
 

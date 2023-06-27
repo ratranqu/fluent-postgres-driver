@@ -26,7 +26,7 @@ struct PostgresConverterDelegate: SQLConverterDelegate {
                 return SQLRaw("JSONB")
             }
         case .enum(let value):
-            return SQLIdentifier(value.name)
+            return SQLQualifiedEnum(value.name, space: value.space)
         case .int8, .uint8:
             return SQLIdentifier("char")
         case .int16, .uint16:

@@ -18,6 +18,7 @@ final class FluentPostgresDriverTests: XCTestCase {
     func testCRUD() throws { try self.benchmarker.testCRUD() }
     func testEagerLoad() throws { try self.benchmarker.testEagerLoad() }
     func testEnum() throws { try self.benchmarker.testEnum() }
+    func testEnumSpace() throws { try self.benchmarker.testEnumSpace() }
     func testFilter() throws { try self.benchmarker.testFilter() }
     func testGroup() throws { try self.benchmarker.testGroup() }
     func testID() throws { try self.benchmarker.testID() }
